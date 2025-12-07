@@ -1,0 +1,90 @@
+# Grading configuration for Lab 1.7: Order Lookup Functions
+
+assignment:
+  id: L1.7-order-functions
+  name: "Lab 1.7: Order Lookup Functions"
+  level: 1
+  type: lab
+  passing_score: 70
+
+checks:
+  - id: instantiate
+    name: "Agent Instantiation"
+    points: 10
+    type: instantiate
+    file: solution/agent.py
+  - id: swml_valid
+    name: "SWML Generation"
+    points: 10
+    type: swml_valid
+    file: solution/agent.py
+  - id: func_get_order
+    name: "get_order_status function"
+    points: 15
+    type: function_exists
+    file: solution/agent.py
+    function: get_order_status
+  - id: func_find_orders
+    name: "find_orders_by_email function"
+    points: 10
+    type: function_exists
+    file: solution/agent.py
+    function: find_orders_by_email
+  - id: func_cancel
+    name: "cancel_order function"
+    points: 10
+    type: function_exists
+    file: solution/agent.py
+    function: cancel_order
+  - id: test_order_found
+    name: "Test: Order 12345 found"
+    points: 15
+    type: exec
+    file: solution/agent.py
+    function: get_order_status
+    args:
+      order_number: "12345"
+    expect:
+      stdout_contains:
+        - "shipped"
+        - "fedex"
+
+  - id: test_order_not_found
+    name: "Test: Order 99999 not found"
+    points: 10
+    type: exec
+    file: solution/agent.py
+    function: get_order_status
+    args:
+      order_number: "99999"
+    expect:
+      stdout_contains:
+        - "not found"
+
+  - id: test_cancel
+    name: "Test: Cancel order 67890"
+    points: 20
+    type: exec
+    file: solution/agent.py
+    function: cancel_order
+    args:
+      order_number: "67890"
+    expect:
+      stdout_contains:
+        - "cancelled"
+
+
+feedback:
+  pass: |
+    Excellent work! You've completed Lab 1.7: Order Lookup Functions.
+
+    **Next steps:**
+    - Review the concepts covered
+    - Continue to the next lab
+
+  fail: |
+    Some checks didn't pass. Review the requirements and try again.
+
+    **Tips:**
+    - Run `swaig-test solution/agent.py --list-tools` to verify functions
+    - Run `swaig-test solution/agent.py --dump-swml` to check SWML
