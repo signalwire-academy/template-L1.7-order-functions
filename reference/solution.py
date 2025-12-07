@@ -36,8 +36,14 @@ agent.prompt_add_section(
     ]
 )
 
-# Voice configuration
-agent.add_language("English", "en-US", "rime.spore")
+# Voice configuration with fillers
+agent.add_language(
+    name="English",
+    code="en-US",
+    voice="rime.spore",
+    speech_fillers=["Um", "Let me see"],
+    function_fillers=["Looking that up now...", "One moment please..."]
+)
 
 # Mock databases
 ORDERS = {
@@ -54,7 +60,6 @@ CUSTOMERS = {
 
 @agent.tool(
     description="Look up an order by order number",
-    fillers=["Looking that up now...", "One moment please..."],
     parameters={
         "type": "object",
         "properties": {
@@ -83,7 +88,6 @@ def get_order_status(args: dict, raw_data: dict = None) -> SwaigFunctionResult:
 
 @agent.tool(
     description="Find orders for a customer by email",
-    fillers=["Searching for your orders..."],
     parameters={
         "type": "object",
         "properties": {
